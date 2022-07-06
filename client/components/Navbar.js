@@ -32,14 +32,17 @@ const Navbar = () => {
               <a>Profile </a>
             </li>
             <li>
-              <a>Login </a>
+              <Link href="/signin">Sign in </Link>
             </li>
             <li>
-              <a>SignUp </a>
+              <Link href="/signup">Sign up </Link>
             </li>
           </ul>
         </div>
-        <a href="/" className="btn btn-ghost normal-case text-xl font-sans">
+        <a
+          href="/"
+          className="btn btn-ghost normal-case text-xl font-sans hover:bg-indigo-100"
+        >
           BlogPlus+
         </a>
       </div>
@@ -52,9 +55,7 @@ const Navbar = () => {
             <a>Profile </a>
           </li>
           <li>
-            <Link href="/signin">
-              <a>Sign in </a>
-            </Link>
+            <Link href="/signin">Sign in </Link>
           </li>
           <li>
             <Link href="/signup">
