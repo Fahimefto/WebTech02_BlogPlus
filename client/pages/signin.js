@@ -1,13 +1,16 @@
-const SignUp = () => {
+import Link from "next/link";
+
+const Login = () => {
   return (
-    <div className="max-w-screen-xl  px-4 py-16 mx-auto sm:px-6 lg:px-8 ">
+    <div className="max-w-screen-xl  px-4 py-16 mx-auto sm:px-6 lg:px-8">
       <div className="max-w-lg mx-auto">
         <h1 className="text-2xl font-bold text-center text-indigo-600 sm:text-3xl">
-          Sign Up User Account
+          Pleaser Sign in
         </h1>
 
         <p className="max-w-md mx-auto mt-4 text-center text-gray-500">
-          Password should be 6 characters long
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati
+          sunt dolores deleniti inventore quaerat mollitia?
         </p>
 
         <form
@@ -16,39 +19,6 @@ const SignUp = () => {
         >
           <p className="text-lg font-medium">Sign in to your account</p>
 
-          <div>
-            <label for="email" className="text-sm font-medium">
-              Name
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                type="email"
-                id="email"
-                className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
-                placeholder="Enter email"
-              />
-
-              <span className="absolute inset-y-0 inline-flex items-center right-4">
-                <svg
-                  className="w-5 h-5 text-gray-400"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <circle cx="9" cy="7" r="4" />{" "}
-                  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                  <path d="M16 11l2 2l4 -4" />
-                </svg>
-              </span>
-            </div>
-          </div>
           <div>
             <label for="email" className="text-sm font-medium">
               Email
@@ -123,14 +93,13 @@ const SignUp = () => {
             type="submit"
             className="block w-full px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg"
           >
-            Sign Up
+            Sign in
           </button>
 
           <p className="text-sm text-center text-gray-500">
-            Already have an account
-            <a className="underline" href="/signin">
-              {" "}
-              Sign in
+            No account?
+            <a className="underline" href="/signup">
+              Sign up
             </a>
           </p>
         </form>
@@ -139,4 +108,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
