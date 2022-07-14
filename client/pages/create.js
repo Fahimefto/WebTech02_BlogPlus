@@ -6,14 +6,21 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "../hooks/useAuth";
+import { useRouter } from "next/router";
 
 const CreateBlog = () => {
   const [tittle, setTittle] = useState("");
   const [body, setBody] = useState("");
   const [userID, setUserID] = useState("");
   const [token, setToken] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   useEffect(() => {
+    if (isLoggedIn === undefined) {
+      Router.push("/signin");
+    }
     setUserID(Cookies.get("userID"));
 
     setToken(Cookies.get("authToken"));

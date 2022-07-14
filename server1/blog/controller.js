@@ -25,13 +25,14 @@ const addBlog = (req, res) => {
 };
 
 //get blog by blog id
-const getBlogByBlogId = (req, res) => {
+const getBlogByBlogId = async (req, res) => {
   const id = parseInt(req.params.id);
+  if (id === undefined) {
+    console.log("undefined blog id");
+  }
   pool.query(queries.getBlogByBlogId, [id], (error, results) => {
-    const notFound = !results.rows.length;
-    if (notFound) {
-      res.send("post not found in database");
-    } else {
+    if (error) throw error;
+    else {
       res.status(200).json(results.rows);
     }
   });

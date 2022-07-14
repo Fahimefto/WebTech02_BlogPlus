@@ -11,23 +11,23 @@ const Details = () => {
   const token = Cookies.get("authToken");
   const router = useRouter();
   const { id } = router.query;
-  const url = "http://localhost:5000/api/blogs/" + id;
-  console.log(url);
   console.log(id);
-
   useEffect(() => {
-    axios
-      .get(url, {
-        headers: {
-          auth: token,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setBlogs(res.data);
-      })
-      .catch((error) => console.log(error.message));
-  }, []);
+    if (id) {
+      const url = "http://localhost:5000/api/blogs/" + id;
+      console.log(url);
+      axios
+        .get(url, {
+          headers: {
+            auth: token,
+          },
+        })
+        .then((res) => {
+          setBlogs(res.data);
+        })
+        .catch((error) => console.log(error.message));
+    }
+  }, [id]);
   return (
     <section className="flex items-center justify-center py-10 text-white bg-white sm:py-16 md:py-24 lg:py-32">
       {blogs.map((blog) => (

@@ -56,7 +56,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <button
-                    class=" hover:bg-red-400 text-gray-900  py-2 px-4 rounded-full"
+                    className=" hover:bg-red-400 text-gray-900  py-2 px-4 rounded-full"
                     onClick={logoutHandler}
                   >
                     Log out
@@ -96,7 +96,7 @@ const Navbar = () => {
             </li>
             <li>
               <button
-                class=" hover:bg-red-400 text-gray-900  py-2 px-4 rounded-full"
+                className=" hover:bg-red-400 text-gray-900  py-2 px-4 rounded-full"
                 onClick={logoutHandler}
               >
                 Log out

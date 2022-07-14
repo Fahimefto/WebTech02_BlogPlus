@@ -3,11 +3,20 @@ import Link from "next/link";
 import pic from "../../public/profile.png";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
+import Router from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "../../hooks/useAuth";
+import { useRouter } from "next/router";
+
 const UserDetails = () => {
   const [user, setUser] = useState("");
   const [userName, setUserName] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
+    if (isLoggedIn === undefined) {
+      Router.push("/signin");
+    }
     const userCookie = Cookies.get("userName");
     setUser(userCookie);
     setUserName(Cookies.get("userID"));

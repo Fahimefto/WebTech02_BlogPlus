@@ -5,11 +5,17 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Router, { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "../hooks/useAuth";
 
 const SigninForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  if (isLoggedIn) {
+    Router.push("/blogs");
+  }
   const signinHandler = async (e) => {
     e.preventDefault();
     const url = "http://localhost:5000/api/auth/login";
@@ -35,6 +41,7 @@ const SigninForm = () => {
         Cookies.set("isLoggedIn", true);
 
         Router.push("/blogs");
+        setIsLoggedIn(true);
       } else {
         toast(results.data.message);
         setMessage(results.data.message);
@@ -51,6 +58,7 @@ const SigninForm = () => {
         autoClose={3000}
         toastStyle={{ backgroundColor: "cyan" }}
       />
+
       <div className="max-w-screen-xl  px-4 py-16 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto">
           <h1 className="text-2xl font-bold text-center text-indigo-600 sm:text-3xl">

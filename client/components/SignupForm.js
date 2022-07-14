@@ -4,12 +4,18 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Router, { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "../hooks/useAuth";
 
 const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("Please Fill the all information");
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  if (isLoggedIn) {
+    Router.push("/blogs");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
