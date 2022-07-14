@@ -2,6 +2,7 @@ const queries = require("./queries");
 const pool = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const registerUser = async (req, res) => {
   const { user_name, user_email, user_password } = req.body;
@@ -9,7 +10,7 @@ const registerUser = async (req, res) => {
   pool.query(queries.checkEmail, [user_email], async (error, results) => {
     //if email exists or not
     if (results.rows.length) {
-      res.send("email already exists");
+      res.json({ message: "This email already exists" }).status(200);
     } else {
       const saltRound = 10;
       const salt = await bcrypt.genSalt(saltRound);
@@ -19,8 +20,8 @@ const registerUser = async (req, res) => {
         [user_name, user_email, hashPassword],
         async (error, results) => {
           if (error) throw error;
-          console.log(results.rows);
-          res.status(200).send("register user successfully");
+
+          res.json({ success: true, message: "Sign Up successful" });
         }
       );
     }
@@ -33,7 +34,7 @@ const login = async (req, res) => {
   pool.query(queries.checkEmail, [user_email], async (error, results) => {
     const notFound = !results.rows.length;
     if (notFound) {
-      req.status(401).send("invalid email adress");
+      res.json({ auth: false, message: "invalid email adress" });
     } else {
       const isValid = await bcrypt.compare(
         user_password,
@@ -41,9 +42,22 @@ const login = async (req, res) => {
       );
       if (isValid) {
         const token = jwt.sign({ id: results.rows[0].user_id }, "fahim");
-        res.status(200).send(token);
+        // res.cookie("auth", token, {
+        //   httpOnly: true,
+        //   expires: new Date(Date.now() + 360000),
+        // });
+        res.json({
+          auth: true,
+          message: "Login successful",
+          token: token,
+          userId: results.rows[0].user_id,
+          userName: results.rows[0].user_name,
+        });
       } else {
-        res.status(401).send("Authentication Failed");
+        res.json({
+          auth: false,
+          message: "Authentication failed",
+        });
       }
     }
   });

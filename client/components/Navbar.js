@@ -1,11 +1,26 @@
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import Router, { useRouter } from "next/router";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    setIsLoggedIn(Cookies.get("isLoggedIn"));
+  });
+  const logoutHandler = async (e) => {
+    Cookies.remove("isLoggedIn");
+    Cookies.remove("authToken");
+    Cookies.remove("userID");
+    Cookies.remove("userName");
+    Router.push("/");
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabindex="0" className="btn btn-ghost lg:hidden">
+          <label tabIndex="0" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -14,55 +29,90 @@ const Navbar = () => {
               stroke="currentColor"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
           </label>
           <ul
-            tabindex="0"
+            tabIndex="0"
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
+            {isLoggedIn ? (
+              <div>
+                <li>
+                  <Link href="/blogs">Blogs </Link>
+                </li>
+                <li>
+                  <Link href="/profile">Profile </Link>
+                </li>
+                <li>
+                  <Link href="/create">Create Blog</Link>
+                </li>
+                <li>
+                  <Link href="/profile/myblogs">My Blogs </Link>
+                </li>
+                <li>
+                  <button
+                    class=" hover:bg-red-400 text-gray-900  py-2 px-4 rounded-full"
+                    onClick={logoutHandler}
+                  >
+                    Log out
+                  </button>
+                </li>
+              </div>
+            ) : (
+              <div>
+                <li>
+                  <Link href="/signin">Sign in </Link>
+                </li>
+                <li>
+                  <Link href="/signup">Sign up </Link>
+                </li>
+              </div>
+            )}
+          </ul>
+        </div>
+        <div className="btn btn-ghost normal-case text-lg font-sans text-indigo-600 font-blod ">
+          <Link href="/">BlogPlus+</Link>
+        </div>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        {isLoggedIn ? (
+          <ul className="menu menu-horizontal p-0">
             <li>
-              <a>Blog </a>
+              <Link href="/blogs">Blogs </Link>
             </li>
             <li>
-              <a>Profile </a>
+              <Link href="/profile">Profile </Link>
             </li>
+            <li>
+              <Link href="/create">Create Blog </Link>
+            </li>
+            <li>
+              <Link href="/profile/myblogs">My Blogs </Link>
+            </li>
+            <li>
+              <button
+                class=" hover:bg-red-400 text-gray-900  py-2 px-4 rounded-full"
+                onClick={logoutHandler}
+              >
+                Log out
+              </button>
+            </li>
+          </ul>
+        ) : (
+          <ul className="menu menu-horizontal p-0 ">
             <li>
               <Link href="/signin">Sign in </Link>
             </li>
             <li>
-              <Link href="/signup">Sign up </Link>
+              <Link href="/signup">Sign up</Link>
             </li>
           </ul>
-        </div>
-        <a
-          href="/"
-          className="btn btn-ghost normal-case text-xl font-sans hover:bg-indigo-100"
-        >
-          BlogPlus+
-        </a>
-      </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">
-          <li>
-            <a>Blog </a>
-          </li>
-          <li>
-            <a>Profile </a>
-          </li>
-          <li>
-            <Link href="/signin">Sign in </Link>
-          </li>
-          <li>
-            <Link href="/signup">
-              <a>Sign up </a>
-            </Link>
-          </li>
-        </ul>
+        )}
       </div>
     </div>
   );

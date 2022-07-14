@@ -13,40 +13,26 @@ const getAllBlog = (req, res) => {
 
 //addblog
 const addBlog = (req, res) => {
-  const uid = parseInt(req.params.uid);
-  pool.query(userQuery.getUserById, [uid], (error, results) => {
-    const notFound = !results.rows.length;
-    if (notFound) {
-      res.status(401).send("userid not found");
-    } else {
-      const { blog_tittle, blog_post } = req.body;
-      pool.query(
-        queries.addBlog,
-        [uid, blog_tittle, blog_post],
-        (error, results) => {
-          res.status(200).send("succesfully created blog");
-        }
-      );
+  const { user_id, blog_tittle, blog_post } = req.body;
+  pool.query(
+    queries.addBlog,
+    [user_id, blog_tittle, blog_post],
+    (error, results) => {
+      if (error) throw error;
+      res.json({ success: true, message: "Successfully Created Blog" });
     }
-  });
+  );
 };
 
-//get blog by user id
-const getBlogByUserId = (req, res) => {
-  const uid = parseInt(req.params.uid);
-  pool.query(userQuery.getUserById, [uid], (error, results) => {
+//get blog by blog id
+const getBlogByBlogId = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(queries.getBlogByBlogId, [id], (error, results) => {
     const notFound = !results.rows.length;
     if (notFound) {
-      res.status(401).send("userid not found in database");
+      res.send("post not found in database");
     } else {
-      pool.query(queries.getBlogByUserId, [uid], (error, results) => {
-        const notFoundBlog = !results.rows.length;
-        if (notFoundBlog) {
-          res.send("no blog found for this user " + uid);
-        } else {
-          res.status(200).json(results.rows);
-        }
-      });
+      res.status(200).json(results.rows);
     }
   });
 };
@@ -112,7 +98,7 @@ const getBlogByAllId = (req, res) => {
 module.exports = {
   getAllBlog,
   addBlog,
-  getBlogByUserId,
+  getBlogByBlogId,
   updateBlogByAllId,
   deleteBlogByAllId,
   getBlogByAllId,

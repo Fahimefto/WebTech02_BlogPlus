@@ -34,6 +34,16 @@ const getUserById = (req, res) => {
     res.status(200).json(results.rows);
   });
 };
+const getBlogByUserId = (req, res) => {
+  const { user_id } = req.body;
+  pool.query(queries.getBlogByUserId, [user_id], (err, results) => {
+    if (err) {
+      throw err;
+    } else {
+      res.json(results.rows).status(200);
+    }
+  });
+};
 
 const deleteUserbyId = (req, res) => {
   const id = parseInt(req.params.id);
@@ -74,4 +84,5 @@ module.exports = {
   addUser,
   deleteUserbyId,
   updateUserbyId,
+  getBlogByUserId,
 };

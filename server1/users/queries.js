@@ -5,6 +5,7 @@ const addUser =
   "insert into tbl_user(user_name, user_email, user_password) values($1, $2, $3)";
 const deleteUserbyId = "DELETE FROM tbl_user WHERE user_id=$1";
 const updateUserbyId = "UPDATE tbl_user SET user_name=$1 WHERE user_id=$2";
+const getBlogByUserId = "SELECT * FROM tbl_blog WHERE user_id=$1";
 
 module.exports = {
   getUsers,
@@ -13,4 +14,5 @@ module.exports = {
   checkEmail,
   deleteUserbyId,
   updateUserbyId,
+  getBlogByUserId,
 };
