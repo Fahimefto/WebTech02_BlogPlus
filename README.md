@@ -1,7 +1,7 @@
 ## BlogPlus ..
 A Blog sharing site.
 
-###you have to use servre1 for backend
+### you have to use servre1 for backend
 #### Homepage
 
 <img src ="doc-img/Screenshot from 2022-07-16 11-09-29.png">
