@@ -5,7 +5,7 @@ import { AuthContext } from "../hooks/useAuth";
 
 export default function Home() {
   const { isLoggedIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
+
   return (
     <section className="bg-gray-50 min-h-[92vh]">
       <div className="max-w-screen-xl px-4 py-32 mx-auto lg:h- lg:items-center lg:flex">

@@ -42,10 +42,7 @@ const login = async (req, res) => {
       );
       if (isValid) {
         const token = jwt.sign({ id: results.rows[0].user_id }, "fahim");
-        // res.cookie("auth", token, {
-        //   httpOnly: true,
-        //   expires: new Date(Date.now() + 360000),
-        // });
+
         res.json({
           auth: true,
           message: "Login successful",

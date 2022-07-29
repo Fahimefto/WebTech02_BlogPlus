@@ -26,10 +26,9 @@ const BlogsPage = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setBlogs(res.data);
       })
-      .catch((error) => console.log(error.message));
+      .catch((error) => setError(error.message));
   }, []);
 
   return (
